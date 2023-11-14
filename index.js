@@ -1,10 +1,4 @@
 require('dotenv').config();
-const fetch = require('node-fetch');
-const { HttpsProxyAgent } =  require('https-proxy-agent');
-
-const proxyUrl = "http://proxy.aexp.com:8080/"
-
-const proxyAgent = new HttpsProxyAgent(proxyUrl);
 
 
 const endpoint = `https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY}&q=&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`
@@ -13,21 +7,56 @@ const endpoint = `https://api.giphy.com/v1/gifs/search?api_key=${process.env.API
 // Print out value of API key stored in .env file
 // console.log(endpoint)
 
+
+// if (typeof document !== 'undefined') {
+//     let img = document.querySelector("#img")
+//     let button = document.querySelector("#button")
+//     // Manipulating the DOM here
+//     button.addEventListener("click", () => {
+//         console.log("clicked")
+//         getImages("cats")
+//     })
+// }
+// let searchButton = document.querySelector("#submit_button")
+
+
+// searchButton.addEventListener("click", (e) => {
+//     e.preventDefault()
+//     // let searchVal = document.querySelector("#search").value
+//     // let searchVal = e.target.value
+//     console.log(e)
+//     // getImages(searchVal)
+// })
+
 async function getImages(query) {
-    debugger;
-    let q = `q=${query}`
-    let targetUrl = `https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY}&${q}cat&limit=2&offset=0&rating=g&lang=en&bundle=messaging_non_clips`
-    // console.log(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY}&${q}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`)
-    let response = await fetch(targetUrl, { 
-        agent: load_proxy,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        }
-    });
-    console.log(response.headers)
-    // const data = await response.json()
-    // console.log(data)
+    let imgDiv = document.querySelector("#images")
+    imgDiv.textContent = ''
+    let endpoint = `https://api.giphy.com/v1/gifs/search?api_key=vQwmqhtx7t3o2LWmUUO7KJVe3KIdCq2m&q=${query}&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`
+    let response = await fetch(endpoint);
+    let data = await response.json()
+    let gifs = data.data
+    console.log(gifs)
+    gifs.map((gif) => {
+    const img = document.createElement('img')
+    img.className = "imgs"
+    img.src = gif.images.original.url
+    imgDiv.appendChild(img)
+})
+    // renderImages(data.data)
+    // const firstUrl = data.data[Math.floor(Math.random() * 25)].images.original.url
+    // img.src = firstUrl
 }
 
-getImages("cats")
+function renderImages(gifs) {
+    // console.log(gifs)
+    // gifs.map((gif) => {
+    //     console.log(gif.images.original.url)
+    // })
+    // data.map((gif) => {
+    //     const img = document.createElement('img')
+    //     img.src = gif.images.original.url
+    //     imgDiv.appendChild(img)
+    // })
+}
+
+

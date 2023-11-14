@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiF</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body style="display: flex; flex-direction: column; height: 100vh; align-items: center; justify-content: center;">
+<div style="position: absolute; top: 15px; margin-top: 15px;">
+    <!-- <button id="button" style="display: flex; align-items: center; justify-content: center;">Generate Image</button> -->
+    <form style="padding-top: 1.2rem;">
+        <input id="search" type="text" placeholder="search for a gif...">
+        <button id="submit_button" type="submit">Search</button>
+    </form>
+</div>
+</br>
+<div id="images" style="align-items: center; justify-content: center; height: 80%; display: flex; flex-flow: row wrap;">
+</div>
+<script>
+    let searchButton = document.querySelector("#submit_button")
+    searchButton.addEventListener("click", (e) => {
+        e.preventDefault()
+        let searchVal = document.querySelector("#search").value
+        // let searchVal = e.target.value
+        getImages(searchVal)
+})
+
+</script>
+<script defer src="./index.js"></script>
+</body>
+</html>
